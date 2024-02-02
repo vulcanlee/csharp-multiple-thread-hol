@@ -27,7 +27,6 @@ internal class Program
         thread1.Start(); thread2.Start();
         thread1.Join(); thread2.Join();
         sw.Stop();
-        Console.WriteLine("Counter: " + counter);
-        Console.WriteLine("Time: " + sw.Elapsed);
+        Console.WriteLine($"Time: {sw.Elapsed}  Counter: {counter}");
     }
 }

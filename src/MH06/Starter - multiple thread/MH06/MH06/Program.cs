@@ -8,37 +8,25 @@ internal class Program
     {
         int counter = 0;
         int max = int.MaxValue;
-        object locker = new object();
         Stopwatch sw = new Stopwatch();
         sw.Start();
         Thread thread1 = new Thread(() =>
         {
-            int subCounter = 0;
             for (int i = 0; i < max; i++)
             {
-                subCounter++;
-            }
-            lock (locker)
-            {
-                counter += subCounter;
+                counter++;
             }
         });
         Thread thread2 = new Thread(() =>
         {
-            int subCounter = 0;
             for (int i = 0; i < max; i++)
             {
-                subCounter++;
-            }
-            lock (locker)
-            {
-                counter -= subCounter;
+                counter--;
             }
         });
         thread1.Start(); thread2.Start();
         thread1.Join(); thread2.Join();
         sw.Stop();
-        Console.WriteLine("Counter: " + counter);
-        Console.WriteLine("Time: " + sw.Elapsed);
+        Console.WriteLine($"Time: {sw.Elapsed}  Counter: {counter}");
     }
 }
