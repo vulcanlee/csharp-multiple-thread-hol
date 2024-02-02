@@ -7,26 +7,26 @@ internal class Program
     static void Main(string[] args)
     {
         int counter = 0;
-        int max = int.MaxValue/4;
-        AutoResetEvent autoResetEvent = new AutoResetEvent(true);
+        int max = 999999;  // int.MaxValue = 2147483647
+        Semaphore semaphore = new Semaphore(1, 1); // 1 : 初始許可數  1 : 最大許可數
         Stopwatch sw = new Stopwatch();
         sw.Start();
         Thread thread1 = new Thread(() =>
         {
             for (int i = 0; i < max; i++)
             {
-                autoResetEvent.WaitOne();
+                semaphore.WaitOne();
                 counter++;
-                autoResetEvent.Set();
+                semaphore.Release();
             }
         });
         Thread thread2 = new Thread(() =>
         {
             for (int i = 0; i < max; i++)
             {
-                autoResetEvent.WaitOne();
+                semaphore.WaitOne();
                 counter--;
-                autoResetEvent.Set();
+                semaphore.Release();
             }
         });
         thread1.Start(); thread2.Start();
