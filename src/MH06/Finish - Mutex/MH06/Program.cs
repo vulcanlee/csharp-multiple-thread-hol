@@ -7,7 +7,8 @@ internal class Program
     static void Main(string[] args)
     {
         int counter = 0;
-        int max = 999999;  // int.MaxValue = 2147483647
+        int max = int.MaxValue;  // int.MaxValue = 2147483647
+        //int max = 999999;  // int.MaxValue = 2147483647
         Mutex mutex = new Mutex();
         Stopwatch sw = new Stopwatch();
         sw.Start();
@@ -15,8 +16,13 @@ internal class Program
         {
             for (int i = 0; i < max; i++)
             {
+                if(i % 20_0000 == 0)
+                {
+                    Console.WriteLine($"Thread1: {i} - {max-i}");
+                }
                 mutex.WaitOne();
                 counter++;
+                //Console.Write($"{counter} ");
                 mutex.ReleaseMutex();
             }
         });
@@ -26,6 +32,7 @@ internal class Program
             {
                 mutex.WaitOne();
                 counter--;
+                //Console.Write($"{counter} ");
                 mutex.ReleaseMutex();
             }
         });
