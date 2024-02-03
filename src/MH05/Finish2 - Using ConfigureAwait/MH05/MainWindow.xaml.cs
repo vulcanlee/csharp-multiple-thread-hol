@@ -23,8 +23,10 @@ namespace MH05
 
         private async void StartBtn_Click(object sender, RoutedEventArgs e)
         {
-            //new MyService().StartAsync().Wait();
-            await new MyService().StartAsync();
+            MessableLbl.Content = "Runing...";
+            var task = new MyService().StartAsync();
+            var result = task.Result;
+            MessableLbl.Content = result;
         }
     }
 }

@@ -9,10 +9,11 @@ namespace MH05
 {
     public class MyService
     {
-        public async Task StartAsync()
+        public async Task<string> StartAsync()
         {
             var result = GetAsync().Result;
             await Task.Delay(result / 20);
+            return result.ToString() + $" {DateTime.Now}";
         }
 
         public async Task<int> GetAsync()

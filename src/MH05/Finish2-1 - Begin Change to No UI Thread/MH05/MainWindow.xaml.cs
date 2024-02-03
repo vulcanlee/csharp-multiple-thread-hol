@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -23,8 +24,15 @@ namespace MH05
 
         private async void StartBtn_Click(object sender, RoutedEventArgs e)
         {
-            //new MyService().StartAsync().Wait();
-            await new MyService().StartAsync();
+            MessableLbl.Content = "Runing...";
+            await Task.Delay(1).ConfigureAwait(false);
+            int ThreadId = Thread.CurrentThread.ManagedThreadId;
+            Debug.WriteLine($"[StartBtn_Click - StartAsync] Begin {ThreadId}");
+            var task = new MyService().StartAsync();
+            ThreadId = Thread.CurrentThread.ManagedThreadId;
+            Debug.WriteLine($"[StartBtn_Click - Result] Begin {ThreadId}");
+            var result = task.Result;
+            Dispatcher.Invoke(() => MessableLbl.Content = result);
         }
     }
 }

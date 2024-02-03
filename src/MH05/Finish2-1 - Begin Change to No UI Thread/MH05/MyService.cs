@@ -10,20 +10,21 @@ namespace MH05
 {
     public class MyService
     {
-        public async Task StartAsync()
+        public async Task<string> StartAsync()
         {
             int beforeAsyncThreadId = Environment.CurrentManagedThreadId;
-            var result = GetAsync().Result;
+            var result = await GetAsync();
             int afterAsyncThreadId = Environment.CurrentManagedThreadId;
             Debug.WriteLine($"[StartAsync] Before async: {beforeAsyncThreadId}, after async: {afterAsyncThreadId}");
             await Task.Delay(result / 20);
+            return result.ToString();
         }
 
         public async Task<int> GetAsync()
         {
             int beforeAsyncThreadId = Environment.CurrentManagedThreadId;
             var result = await new HttpClient()
-                .GetStringAsync("https://www.google.com").ConfigureAwait(false);
+                .GetStringAsync("https://www.google.com");
             int afterAsyncThreadId = Environment.CurrentManagedThreadId;
             Debug.WriteLine($"[GetAsync] Before async: {beforeAsyncThreadId}, after async: {afterAsyncThreadId}");
             return result.Length;
