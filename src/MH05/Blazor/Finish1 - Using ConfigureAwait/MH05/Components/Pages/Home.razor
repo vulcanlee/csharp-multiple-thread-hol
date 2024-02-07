@@ -1,0 +1,18 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<button class="btn btn-primary" @onclick="ButtonClicked">開始</button>
+<h1>@message</h1>
+<p>按下按鈕後，會先出現 Running... 訊息，等待一下，就會出現網頁內容大小</p>
+
+@code{
+    string message = "Hello, world!";
+
+    async Task ButtonClicked()
+    {
+        message = "Running...";
+        string result = await new MyService().StartAsync();
+        message = result;
+    }
+}
