@@ -2,11 +2,20 @@
 
 public class SalesReport
 {
-    public async void GenerateReport()
+    public async Task GenerateReportAsync()
     {
         Console.WriteLine("產生銷售報表 ...");
-        ReadDataAsync();
-        Console.WriteLine("銷售報表產生完成 ...");
+        Task task = ReadDataAsync();
+        try
+        {
+            await task;
+            Console.WriteLine("銷售報表產生完成 ...");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"SalesReport 發現例外異常 : {ex.Message}");
+            throw;
+        }
     }
     async Task ReadDataAsync()
     {
