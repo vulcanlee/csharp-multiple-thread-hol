@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript UI Block Example</title>
+</head>
+<body>
+
+<button id="showTimeBtn">顯示時間</button>
+<button id="blockUIBtn">阻塞UI</button>
+<div id="timeDisplay"></div>
+
+<script>
+document.getElementById('showTimeBtn').addEventListener('click', function() {
+    var now = new Date();
+    document.getElementById('timeDisplay').innerText = "現在時間是: " + now.toLocaleTimeString();
+});
+
+document.getElementById('blockUIBtn').addEventListener('click', function() {
+    // 阻塞UI的操作
+    let startTime = Date.now();
+    let endTime = startTime;
+    
+    // 假設這個迴圈運行足夠長的時間（例如5秒）
+    while (endTime < startTime + 5000) {
+        endTime = Date.now();
+    }
+    
+    alert("UI阻塞完成");
+});
+</script>
+
+</body>
+</html>
